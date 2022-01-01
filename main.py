@@ -1,6 +1,37 @@
 from kivy.app import App
+from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.utils import platform
+
+if platform == "android":
+    from android.permissions import request_permissions, Permission
+    request_permissions([Permission.RECORD_AUDIO])
+
+kv = '''
+#: import audio_player plyer.audio
+<AudioInterface>:
+    audio: audio_player
+    orientation: 'vertical'
+
+    Label:
+        id: state
+        text: 'Audio is: '+str(root.audio.state)
+
+    Label:
+        id: audio_location
+        text: 'Audio is saved at - '+ str(root.audio.file_path)
+
+    Button:
+        id: record_button
+        text: 'START RECORD'
+        on_release: root.start_recording()
+
+    Button:
+        id: play_button
+        text: 'PLAY'
+        on_release: root.start_playing()
+'''
 
 
 class AudioInterface(BoxLayout):
@@ -51,9 +82,9 @@ class AudioInterface(BoxLayout):
 
 class AudioApp(App):
     def build(self):
+        Builder.load_string(kv)
         return AudioInterface()
 
 
 if __name__ == '__main__':
-    # run загружает kv файл с названием класса без суффикса App
     AudioApp().run()
