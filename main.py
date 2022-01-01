@@ -1,5 +1,4 @@
 from kivy.app import App
-from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
@@ -18,7 +17,7 @@ class AudioInterface(BoxLayout):
         self.update_labels()
 
     def start_playing(self):
-        state = self.audio
+        state = self.audio.state
         if state == 'playing':
             self.audio.stop()
         else:
