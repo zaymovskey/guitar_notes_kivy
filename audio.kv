@@ -1,0 +1,22 @@
+#: import audio_player plyer.audio
+<AudioInterface>:
+    audio: audio_player
+    orientation: 'vertical'
+
+    Label:
+        id: state
+        text: 'Audio is: '+str(root.audio.state)
+
+    Label:
+        id: audio_location
+        text: 'Audio is saved at - '+ str(root.audio.file_path)
+
+    Button:
+        id: record_button
+        text: 'START RECORD'
+        on_release: root.start_recording()
+
+    Button:
+        id: play_button
+        text: 'PLAY'
+        on_release: root.start_playing()
